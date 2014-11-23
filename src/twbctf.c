@@ -1,5 +1,5 @@
 /*******************************************************************\
-* A small, native C test suite for libweather                       *
+* A small, C test framework                                         *
 * Copyright (C) 2013-2014, Sam Stuewe                               *
 *                                                                   *
 * This program is free software; you can redistribute it and/or     *
