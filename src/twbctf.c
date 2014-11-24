@@ -19,34 +19,20 @@
 \*******************************************************************/
 
 // Libraries //
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdbool.h>
 #include "twbctf.h"
 
 // Forward Declarations //
-#define TEST_COUNT ((sizeof test_list)/(sizeof test_list[0]))
-
-/* Test Utilities */
-void 
-run_test (char * test_name, test_p function);
+#define TEST_COUNT ((sizeof test_list)/(sizeof (struct test)))
 
 // Run Suite //
-int 
+signed
 main (void) {
 
     for ( size_t i = 0; i < TEST_COUNT; i ++ ) {
-        run_test(test_list[i].desc, test_list[i].func);
+        printf("Testing %s\t\t[ PEND ]\r", test_list[i].desc);
+        char * result = (test_list[i].func() ? "\x1b[32mPASS" : "\x1b[31mFAIL");
+        printf("Testing %s\t\t[ %s \x1b[0m]\n", test_list[i].desc, result);
     } return 0;
 }
 
-void 
-run_test (char * test_name, test_p func) {
-
-    printf("Testing %s\t\t[ PEND ]\r", test_name);
-    char * test_result = (func() ? "\x1b[32mPASS" : "\x1b[31mFAIL");
-    printf("Testing %s\t\t[ %s \x1b[0m]\n", test_name, test_result);
-}
 // vim: set ts=4 sw=4 et:
