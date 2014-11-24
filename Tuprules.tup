@@ -1,2 +1,3 @@
-CFLAGS += -Weverything -std=c11
+CFLAGS += -g -O2 -fPIE -pie -fstack-protector-all -Weverything -std=c11
+LDFLAGS += -Wl,-z,relro,-z,now
 CC = clang
