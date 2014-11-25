@@ -17,14 +17,17 @@ struct test {
 
 extern struct test test_list [];
 
-// Edit tests and struct below this line
+/**
+ * If you need other libraries / headers, edit includes above
+ * Edit tests and struct list below
+ */
 
 bool test_success (void);
 bool test_fail    (void);
 
 struct test test_list [] = {
-    { "success\t",   (test_p )test_success       },
-    { "fail\t",      (test_p )test_fail          }
+    { "success\t", test_success },
+    { "fail\t",    test_fail    }
 };
 
 bool
