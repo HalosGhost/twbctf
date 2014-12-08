@@ -1,5 +1,5 @@
-#ifndef __TWBCTF_H__
-#define __TWBCTF_H__
+#ifndef TWBCTF_H
+#define TWBCTF_H
 
 // Libraries //
 #include <stdio.h>
@@ -41,4 +41,4 @@ test_fail (void) {
 }
 
 // vim: set ts=4 sw=4 et:
-#endif // __TWBCTF_H__
+#endif // TWBCTF_H
