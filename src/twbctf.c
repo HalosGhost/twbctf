@@ -26,12 +26,26 @@
 
 // Run Suite //
 signed
-main (void) {
+main (signed argc, char * argv []) {
 
-    for ( size_t i = 0; i < TEST_COUNT; i ++ ) {
-        printf("Testing %s\t\t[ PEND ]\r", test_list[i].desc);
-        char * result = (test_list[i].func() ? "\x1b[32mPASS" : "\x1b[31mFAIL");
-        printf("Testing %s\t\t[ %s \x1b[0m]\n", test_list[i].desc, result);
+    const size_t tc = TEST_COUNT;
+    bool results [tc];
+    bool shortened = (argc > 1 && *(short * )argv[1] == 0x732d);
+    for ( size_t i = 0; i < tc; i ++ ) {
+        if ( shortened ) {
+            results[i] = test_list[i].func();
+            //printf(results[i] ? "\x1b[32m." : "\x1b[31mF");
+            putchar(results[i] ? '.' : '!');
+        } else {
+            printf("Testing %s\t\t[ PEND ]\r", test_list[i].desc);
+            char * r = test_list[i].func() ? "\x1b[32mPASS" : "\x1b[31mFAIL";
+            printf("Testing %s\t\t[ %s \x1b[0m]\n", test_list[i].desc, r);
+        }
+    } if ( shortened ) {
+        printf("\x1b[0m\n\nFailed Tests:\n");
+        for ( size_t i = 0; i < tc; i ++ ) {
+            !results[i] ? printf(" %s\n", test_list[i].desc) : printf("");
+        }
     } return 0;
 }
 
