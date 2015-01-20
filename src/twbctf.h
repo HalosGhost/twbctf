@@ -2,11 +2,10 @@
 #define TWBCTF_H
 
 // Libraries //
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
-#include <stdbool.h>
+#include <stdbool.h> // bool keyword
+#include <stdint.h>  // explicitly sized types
+#include <stdio.h>   // printf(), putchar()
+#include <string.h>  // strlen()
 
 typedef bool (* test_p) (void);
 
@@ -26,8 +25,8 @@ bool test_success (void);
 bool test_fail    (void);
 
 struct test test_list [] = {
-    { "success\t", test_success },
-    { "fail\t",    test_fail    }
+    { "success", test_success },
+    { "fail",    test_fail    }
 };
 
 bool
