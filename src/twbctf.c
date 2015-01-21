@@ -43,9 +43,10 @@ main (int32_t argc, char * argv []) {
             ret = ret || results[i];
         } else {
             printf("Testing %-*s\t[ PEND ]\r", maxl, test_list[i].desc);
-            char * r = test_list[i].func() ? "\x1b[32mPASS" : "\x1b[31mFAIL";
+            bool result = test_list[i].func();
+            char * r = result ? "\x1b[32mPASS" : "\x1b[31mFAIL";
             printf("Testing %-*s\t[ %s \x1b[0m]\n", maxl, test_list[i].desc, r);
-            ret = ret || r;
+            ret = ret || result;
         }
     } if ( shortened ) {
         printf("\x1b[0m\n\nFailed Tests:\n");
