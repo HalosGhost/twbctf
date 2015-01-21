@@ -19,7 +19,11 @@
 \*******************************************************************/
 
 // Libraries //
-#include "twbctf.h"
+#include <stdint.h>  // explicitly sized types
+#include <stdio.h>   // printf(), putchar()
+#include <string.h>  // strlen()
+#include "twbctf.h"  // testing forward declarations
+#include "tests.c"   // tests
 
 // Run Suite //
 int32_t

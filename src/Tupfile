@@ -1,3 +1,4 @@
 include_rules
 
-: *.c | *.h |> $(CC) $(CFLAGS) -Wno-vla -Wno-cast-align $(LDFLAGS) %f -o %o |> suite
+: tests.c | twbctf.h |> $(CC) $(CFLAGS) -Wno-vla -Wno-cast-align -c %f -o %o |> %B.o
+: twbctf.c | tests.o |> $(CC) $(CFLAGS) -Wno-vla -Wno-cast-align -pie $(LDFLAGS) %f -o %o |> suite
