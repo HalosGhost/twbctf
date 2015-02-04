@@ -38,24 +38,24 @@ main (int32_t argc, char * argv []) {
         maxl = cur > maxl ? cur : maxl;
     }
 
-    bool shortened = (argc > 1 && *(int16_t * )argv[1] == *(int16_t * )"-s");
-
-    for ( size_t i = 0; i < TC; i ++ ) {
-        if ( shortened ) {
+    if ( argc > 1 && *(int16_t * )argv[1] == *(int16_t * )"-s" ) { // shortened
+        for ( size_t i = 0; i < TC; i ++ ) {
             results[i] = test_list[i].func();
             putchar(results[i] ? '.' : '!');
             ret = ret || !results[i];
-        } else {
+        } if ( ret ) {
+            printf("\x1b[0m\n\nFailed Tests:\n");
+            for ( size_t i = 0; i < TC; i ++ ) {
+                !results[i] ? printf(" %s\n", test_list[i].desc) : printf("");
+            }
+        }
+    } else {
+        for ( size_t i = 0; i < TC; i ++ ) {
             printf("Testing %-*s\t[ PEND ]\r", maxl, test_list[i].desc);
             bool result = test_list[i].func();
             const char * r = result ? "\x1b[32mPASS" : "\x1b[31mFAIL";
             printf("Testing %-*s\t[ %s \x1b[0m]\n", maxl, test_list[i].desc, r);
             ret = ret || !result;
-        }
-    } if ( shortened ) {
-        printf("\x1b[0m\n\nFailed Tests:\n");
-        for ( size_t i = 0; i < TC; i ++ ) {
-            !results[i] ? printf(" %s\n", test_list[i].desc) : printf("");
         }
     } return ret;
 }
