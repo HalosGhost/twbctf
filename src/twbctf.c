@@ -31,10 +31,10 @@ main (int32_t argc, char * argv []) {
 
     const size_t TC = (sizeof test_list)/(sizeof (struct test));
     bool results [TC], ret = false;
-    int8_t maxl = 0;
+    uint16_t maxl = 0;
 
     for ( size_t i = 0; i < TC; i ++ ) {
-        int8_t cur = (int8_t )strlen(test_list[i].desc);
+        uint16_t cur = (uint16_t )strlen(test_list[i].desc);
         maxl = cur > maxl ? cur : maxl;
     }
 
