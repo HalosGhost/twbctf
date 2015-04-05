@@ -46,7 +46,7 @@ main (int32_t argc, char * argv []) {
         } if ( ret ) {
             printf("\x1b[0m\n\nFailed Tests:\n");
             for ( size_t i = 0; i < TC; i ++ ) {
-                !results[i] ? printf(" %s\n", test_list[i].desc) : printf("");
+                if ( !results[i] ) { printf(" %s\n", test_list[i].desc); }
             }
         }
     } else {
