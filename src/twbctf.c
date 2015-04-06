@@ -26,8 +26,8 @@
 #include "tests.c"   // tests
 
 // Run Suite //
-int32_t
-main (int32_t argc, char * argv []) {
+signed
+main (signed argc, char * argv []) {
 
     const size_t TC = (sizeof test_list)/(sizeof (struct test));
     bool results [TC], ret = false;
