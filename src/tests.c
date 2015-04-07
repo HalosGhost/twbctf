@@ -7,11 +7,11 @@
 #include "twbctf.h" // Don't remove this!
 
 bool test_success (void);
-bool test_fail    (void);
+bool test_failure (void);
 
 const struct test test_list [] = {
     { "success", test_success },
-    { "fail",    test_fail    }
+    { "failure", test_failure }
 };
 
 bool
@@ -20,7 +20,7 @@ test_success (void) {
 }
 
 bool
-test_fail (void) {
+test_failure (void) {
     return false;
 }
 
