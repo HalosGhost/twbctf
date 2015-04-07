@@ -39,16 +39,21 @@ main (signed argc, char * argv []) {
     }
 
     if ( argc > 1 && *(int16_t * )argv[1] == *(int16_t * )"-s" ) { // shortened
+        size_t p = 0, f = 0;
+
         for ( size_t i = 0; i < TC; i ++ ) {
             results[i] = test_list[i].func();
+            results[i] ? ++p : ++f;
             putchar(results[i] ? '.' : '!');
             ret = ret || !results[i];
-        } if ( ret ) {
-            printf("\x1b[0m\n\nFailed Tests:\n");
+        } printf("\x1b[0m\n\n%zu Passed, %zu Failed", p, f);
+
+        if ( ret ) {
+            printf(":\n");
             for ( size_t i = 0; i < TC; i ++ ) {
                 if ( !results[i] ) { printf(" %s\n", test_list[i].desc); }
             }
-        }
+        } else { putchar('\n'); }
     } else {
         for ( size_t i = 0; i < TC; i ++ ) {
             printf("Testing %-*s\t[ PEND ]\r", maxl, test_list[i].desc);
