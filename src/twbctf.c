@@ -1,6 +1,6 @@
 /*******************************************************************\
 * A small, C test framework                                         *
-* Copyright (C) 2013-2014, Sam Stuewe                               *
+* Copyright (C) 2013-2015, Sam Stuewe                               *
 *                                                                   *
 * This program is free software; you can redistribute it and/or     *
 * modify it under the terms of the GNU General Public License       *
@@ -38,7 +38,15 @@ main (signed argc, char * argv []) {
         maxl = cur > maxl ? cur : maxl;
     }
 
-    if ( argc > 1 && *(int16_t * )argv[1] == *(int16_t * )"-s" ) { // shortened
+    if ( argc > 1 && *(int16_t * )argv[1] == *(int16_t * )"-v" ) { // verbose
+        for ( size_t i = 0; i < TC; i ++ ) {
+            printf("Testing %-*s\t[ PEND ]\r", maxl, test_list[i].desc);
+            bool result = test_list[i].func();
+            const char * r = result ? "\x1b[32mPASS" : "\x1b[31mFAIL";
+            printf("Testing %-*s\t[ %s \x1b[0m]\n", maxl, test_list[i].desc, r);
+            ret = ret || !result;
+        }
+    } else {
         size_t p = 0, f = 0;
 
         for ( size_t i = 0; i < TC; i ++ ) {
@@ -54,14 +62,6 @@ main (signed argc, char * argv []) {
                 if ( !results[i] ) { printf(" %s\n", test_list[i].desc); }
             }
         } else { putchar('\n'); }
-    } else {
-        for ( size_t i = 0; i < TC; i ++ ) {
-            printf("Testing %-*s\t[ PEND ]\r", maxl, test_list[i].desc);
-            bool result = test_list[i].func();
-            const char * r = result ? "\x1b[32mPASS" : "\x1b[31mFAIL";
-            printf("Testing %-*s\t[ %s \x1b[0m]\n", maxl, test_list[i].desc, r);
-            ret = ret || !result;
-        }
     } return ret;
 }
 
