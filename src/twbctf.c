@@ -19,18 +19,15 @@
 \*******************************************************************/
 
 // Libraries //
-#include <stdint.h>  // explicitly sized types
-#include <stdio.h>   // printf(), putchar()
-#include <string.h>  // strlen()
 #include "twbctf.h"  // testing forward declarations
 #include "tests.c"   // tests
 
 // Run Suite //
 signed
-main (signed argc, char * argv []) {
+main (void) {
 
     const size_t TC = (sizeof test_list)/(sizeof (struct test));
-    bool results [TC], ret = false;
+    signed results [TC], ret = 0;
     uint16_t maxl = 0;
 
     for ( size_t i = 0; i < TC; i ++ ) {
@@ -38,30 +35,25 @@ main (signed argc, char * argv []) {
         maxl = cur > maxl ? cur : maxl;
     }
 
-    if ( argc > 1 && *(int16_t * )argv[1] == *(int16_t * )"-v" ) { // verbose
+    size_t p = 0, f = 0;
+
+    for ( size_t i = 0; i < TC; i ++ ) {
+        results[i] = test_list[i].func();
+        results[i] ? ++p : ++f;
+        putchar(!results[i] ? '.' : '!');
+        ret = ret || !results[i];
+        fflush(stdout);
+    } printf("\x1b[0m\n\n%zu Passed, %zu Failed", p, f);
+
+    if ( ret ) {
+        printf(":\n");
         for ( size_t i = 0; i < TC; i ++ ) {
-            printf("Testing %-*s\t[ PEND ]\r", maxl, test_list[i].desc);
-            bool result = test_list[i].func();
-            const char * r = result ? "\x1b[32mPASS" : "\x1b[31mFAIL";
-            printf("Testing %-*s\t[ %s \x1b[0m]\n", maxl, test_list[i].desc, r);
-            ret = ret || !result;
+            if ( results[i] ) {
+                printf(" %s returned %d\n", test_list[i].desc, results[i]);
+            }
         }
     } else {
-        size_t p = 0, f = 0;
-
-        for ( size_t i = 0; i < TC; i ++ ) {
-            results[i] = test_list[i].func();
-            results[i] ? ++p : ++f;
-            putchar(results[i] ? '.' : '!');
-            ret = ret || !results[i];
-        } printf("\x1b[0m\n\n%zu Passed, %zu Failed", p, f);
-
-        if ( ret ) {
-            printf(":\n");
-            for ( size_t i = 0; i < TC; i ++ ) {
-                if ( !results[i] ) { printf(" %s\n", test_list[i].desc); }
-            }
-        } else { putchar('\n'); }
+        putchar('\n');
     } return ret;
 }
 

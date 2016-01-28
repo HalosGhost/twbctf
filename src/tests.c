@@ -6,21 +6,16 @@
 
 #include "twbctf.h" // Don't remove this!
 
-bool test_success (void);
-bool test_failure (void);
+declare_test(test_success) {
+    return 0;
+}
+
+declare_test(test_failure) {
+    return 1;
+}
 
 const struct test test_list [] = {
-    { "success", test_success },
-    { "failure", test_failure }
+    { "successful test", test_success },
+    { "failing test",    test_failure }
 };
-
-bool
-test_success (void) {
-    return true;
-}
-
-bool
-test_failure (void) {
-    return false;
-}
 
