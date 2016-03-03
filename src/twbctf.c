@@ -39,9 +39,9 @@ main (void) {
 
     for ( size_t i = 0; i < TC; i ++ ) {
         results[i] = test_list[i].func();
-        results[i] ? ++p : ++f;
+        results[i] ? ++f : ++p;
         putchar(!results[i] ? '.' : '!');
-        ret = ret || !results[i];
+        ret = ret || results[i];
         fflush(stdout);
     } printf("\x1b[0m\n\n%zu Passed, %zu Failed", p, f);
 
