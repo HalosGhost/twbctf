@@ -43,7 +43,7 @@ main (void) {
         putchar(!results[i] ? '.' : '!');
         ret = ret || results[i];
         fflush(stdout);
-    } printf("\x1b[0m\n\n%zu Passed, %zu Failed", p, f);
+    } printf("\n\n%zu Passed, %zu Failed", p, f);
 
     if ( ret ) {
         printf(":\n");
